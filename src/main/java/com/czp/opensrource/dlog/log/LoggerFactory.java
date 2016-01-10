@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog;
+package com.czp.opensrource.dlog.log;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -10,11 +10,11 @@ import org.slf4j.Logger;
  * Author :coder_czp@126.com<br>
  * Copyright (c) 2015,coder_czp@126.com All Rights Reserved.
  */
-public class DLoggerFactory implements ILoggerFactory {
+public class LoggerFactory implements ILoggerFactory {
 
-	private DLogger dLogger = new DLogger();
+	private LoggerWrapper dLogger = new LoggerWrapper();
 
-	public DLoggerFactory() {
+	public LoggerFactory() {
 	}
 
 	public Logger getLogger(String name) {

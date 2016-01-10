@@ -3,7 +3,7 @@ package org.slf4j.impl;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
-import com.czp.opensrource.dlog.DLoggerFactory;
+import com.czp.opensrource.dlog.log.LoggerFactory;
 
 /**
  * Function:实现SLF4J API<br>
@@ -16,9 +16,9 @@ import com.czp.opensrource.dlog.DLoggerFactory;
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
 	public static String REQUESTED_API_VERSION = "1.6";
-	private final ILoggerFactory loggerFactory = new DLoggerFactory();
+	private final ILoggerFactory loggerFactory = new LoggerFactory();
 	private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder();
-	private static final String logFactoryClsStr = DLoggerFactory.class.getName();
+	private static final String logFactoryClsStr = LoggerFactory.class.getName();
 	
 	public static final StaticLoggerBinder getSingleton() {
 		return SINGLETON;

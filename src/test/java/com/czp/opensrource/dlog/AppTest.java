@@ -1,7 +1,5 @@
 package com.czp.opensrource.dlog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -21,8 +19,4 @@ public class AppTest extends TestCase {
 		assertTrue(true);
 	}
 
-	public static void main(String[] args) {
-		Logger log = LoggerFactory.getLogger(AppTest.class);
-		log.debug("dgfdfgfdgfdhh");
-	}
 }
