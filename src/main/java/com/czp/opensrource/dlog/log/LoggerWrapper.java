@@ -7,7 +7,7 @@ import com.czp.opensrource.dlog.api.LogProvider;
 import com.czp.opensrource.dlog.impl.AMQLogSender;
 
 /**
- * Function:XXX<br>
+ * Function:日志包装器,在这里拦截日志发送到服务端<br>
  *
  * Date :2016年1月9日 <br>
  * Author :coder_czp@126.com<br>

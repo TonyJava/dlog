@@ -3,7 +3,7 @@ package com.czp.opensrource.dlog.api;
 import java.util.Properties;
 
 /**
- * Function:分布式日志系统的MQ服务接口<br>
+ * Function:服务接口<br>
  *
  * Date :2016年1月10日 <br>
  * Author :coder_czp@126.com<br>

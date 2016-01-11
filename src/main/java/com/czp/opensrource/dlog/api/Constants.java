@@ -1,7 +1,7 @@
 package com.czp.opensrource.dlog.api;
 
 /**
- * Function:XXX<br>
+ * Function:常量接口<br>
  *
  * Date :2016年1月10日 <br>
  * Author :coder_czp@126.com<br>
