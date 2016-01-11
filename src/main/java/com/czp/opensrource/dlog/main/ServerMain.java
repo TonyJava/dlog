@@ -2,7 +2,7 @@ package com.czp.opensrource.dlog.main;
 
 import java.util.Properties;
 
-import com.czp.opensrource.dlog.api.LogServer;
+import com.czp.opensrource.dlog.api.Server;
 import com.czp.opensrource.dlog.impl.AMQLogServer;
 
 /**
@@ -15,7 +15,7 @@ import com.czp.opensrource.dlog.impl.AMQLogServer;
 public class ServerMain {
 
 	public static void main(String[] args) throws Exception {
-		LogServer server = new AMQLogServer();
+		Server server = new AMQLogServer();
 		Properties cfg = new Properties();
 		server.init(cfg);
 		server.start();

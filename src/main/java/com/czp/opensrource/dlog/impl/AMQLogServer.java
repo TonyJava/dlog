@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 
-import com.czp.opensrource.dlog.api.LogServer;
+import com.czp.opensrource.dlog.api.Server;
 
 /**
  * Function:分布式日志系统的AMQ实现<br>
@@ -15,7 +15,7 @@ import com.czp.opensrource.dlog.api.LogServer;
  * Author :coder_czp@126.com<br>
  * Copyright (c) 2015,coder_czp@126.com All Rights Reserved.
  */
-public class AMQLogServer implements LogServer {
+public class AMQLogServer implements Server {
 
 	private BrokerService broker = new BrokerService();
 

@@ -9,7 +9,7 @@ import java.util.Properties;
  * Author :coder_czp@126.com<br>
  * Copyright (c) 2015,coder_czp@126.com All Rights Reserved.
  */
-public interface LogServer extends Constants {
+public interface Server extends Constants {
 
 	/**
 	 * 初始化MQ服务

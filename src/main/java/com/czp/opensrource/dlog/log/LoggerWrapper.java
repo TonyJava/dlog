@@ -3,7 +3,7 @@ package com.czp.opensrource.dlog.log;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
-import com.czp.opensrource.dlog.api.LogSender;
+import com.czp.opensrource.dlog.api.LogProvider;
 import com.czp.opensrource.dlog.impl.AMQLogSender;
 
 /**
@@ -15,7 +15,7 @@ import com.czp.opensrource.dlog.impl.AMQLogSender;
  */
 public class LoggerWrapper implements Logger {
 
-	private LogSender sender = new AMQLogSender();
+	private LogProvider sender = new AMQLogSender();
 
 	public LoggerWrapper() {
 		try {
