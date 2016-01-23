@@ -15,8 +15,14 @@ import org.apache.log4j.spi.LoggingEvent;
  * Function: 基于kafka的Appender
  * 
  * @author: jeff.cao@aoliday.com
- * @date: 2016年1月23日
- * 
+ * @date: 2016年1月23日 <br>
+ *        usage:<br>
+ *        # appender kafka <br>
+ *        log4j.appender.KAFKA=com.aoliday.com.log.MQAppender <br>
+ *        log4j.appender.KAFKA.servers=127.0.0.1:9092,127.0.0.1:9093 log4j.appender.KAFKA.topic=test
+ *        log4j.appender.KAFKA.Threshold=INFO log4j.appender.KAFKA.layout=org.apache.log4j.PatternLayout
+ *        log4j.appender.KAFKA.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L-%m%n
+ */
  */
 public class MQAppender extends AppenderSkeleton {
     
