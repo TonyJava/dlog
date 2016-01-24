@@ -1,4 +1,4 @@
-package com.aoliday.com.log;
+package com.czp.opensrource.dlog.log.appender;
 
 import java.util.Properties;
 
@@ -10,7 +10,6 @@ import kafka.producer.async.MissingConfigException;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
-
 /**
  * Function: 基于kafka的Appender
  * 
@@ -22,7 +21,6 @@ import org.apache.log4j.spi.LoggingEvent;
  *        log4j.appender.KAFKA.servers=127.0.0.1:9092,127.0.0.1:9093 log4j.appender.KAFKA.topic=test
  *        log4j.appender.KAFKA.Threshold=INFO log4j.appender.KAFKA.layout=org.apache.log4j.PatternLayout
  *        log4j.appender.KAFKA.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L-%m%n
- */
  */
 public class MQAppender extends AppenderSkeleton {
     
@@ -75,11 +73,11 @@ public class MQAppender extends AppenderSkeleton {
     @Override
     protected void append(LoggingEvent event) {
         try {
-            if (event.getLoggerName().startsWith("kafka."))
+            if (event.getLoggerName().startsWith("kafka"))
                 return;
             String data = subAppend(event);
             String key = String.valueOf(event.timeStamp);
-            producer.send(new KeyedMessage<String, String>(topic, key, data));
+          //  producer.send(new KeyedMessage<String, String>(topic, key, data));
         } catch (Throwable e) {
             LogLog.error("kafka send log message error:" + event.getMessage(), e);
         }

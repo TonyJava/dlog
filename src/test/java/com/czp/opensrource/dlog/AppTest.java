@@ -1,22 +1,29 @@
 package com.czp.opensrource.dlog;
 
+import java.util.Scanner;
 
-import junit.framework.Test;
+import org.apache.log4j.Logger;
+
+import com.czp.opensrource.dlog.log.view.ws.WebLogViewer;
+
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 public class AppTest extends TestCase {
-	
-	public AppTest(String testName) {
-		super(testName);
+
+	public static void main(String[] args) {
+		WebLogViewer view = new WebLogViewer(2233, "127.0.0.1:9092", "127.0.0.1:2181", "test");
+		view.start();
+		
 	}
 
-	public static Test suite() {
-		return new TestSuite(AppTest.class);
-	}
-
-	public void testApp() {
-		assertTrue(true);
+	public static void sendLog() {
+		Logger log = Logger.getLogger(AppTest.class);
+		Scanner sc = new Scanner(System.in);
+		String line = null;
+		while (!(line = sc.nextLine()).equals("exit")) {
+			log.info(line);
+		}
+		sc.close();
 	}
 
 }
