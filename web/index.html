@@ -3,22 +3,24 @@
 <title>weblog</title>
 </head>
 <body>
-	web-log
+	web-log[status:
+	<span id="status">wait connect server</span>]
 	<hr>
-	<div id="mem"
-		style="width: 400px; height: 400px; border: red 1ps slod;">wait
-		to connect server</div>
+	<textarea id="mem" rows="38" cols="150"
+		style="background: black; color: white" readonly="readonly"></textarea>
 </body>
 <script type="text/javascript">
-	var line = 0;
 	var ws = new WebSocket("ws://" + window.location.host + "/ws");
+	var st = document.getElementById("status");
+	var msg = document.getElementById("mem");
+	var line = 0;
+
 	ws.onopen = function() {
-		printmsg("onOpen");
+		st.innerText = "connected to service";
 	};
 
 	ws.onmessage = function(e) {
 		printmsg(e.data);
-		ws.send(e.data);
 	};
 	ws.onclose = function() {
 		printmsg("connect closed");
@@ -28,13 +30,10 @@
 	};
 
 	function printmsg(str) {
-		var msg = document.getElementById("mem");
-		if (line == 0) {
-			msg.innerHTML = str;
-		} else if (line++ < 50) {
-			msg.innerHTML += str+'<br>';
+		if (line++ < 50) {
+			msg.value += str;
 		} else {
-			msg.innerHTML = str;
+			msg.value = str;
 			line = 1;
 		}
 	}

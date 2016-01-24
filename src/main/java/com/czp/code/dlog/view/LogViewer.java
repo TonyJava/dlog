@@ -14,7 +14,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
  * 
  * @author: jeff.cao@aoliday.com
  * @date: 2016年1月23日
- * 
+ * https://gist.github.com/rmoff/c18fd2b4a734576d7289
  */
 public class LogViewer {
 
