@@ -29,11 +29,13 @@
 
 	function printmsg(str) {
 		var msg = document.getElementById("mem");
-		if (line++ < 50)
-			msg.innerHTML += str;
-		else {
+		if (line == 0) {
 			msg.innerHTML = str;
-			line = 0;
+		} else if (line++ < 50) {
+			msg.innerHTML += str+'<br>';
+		} else {
+			msg.innerHTML = str;
+			line = 1;
 		}
 	}
 </script>

@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.impl;
+package com.czp.code.dlog.impl;
 
 import java.util.Properties;
 
@@ -11,8 +11,8 @@ import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.czp.opensrource.dlog.api.Constants;
-import com.czp.opensrource.dlog.api.LogProvider;
+import com.czp.code.dlog.api.Constants;
+import com.czp.code.dlog.api.LogProvider;
 
 /**
  * Function:通过AMQ的Producer发送日志<br>

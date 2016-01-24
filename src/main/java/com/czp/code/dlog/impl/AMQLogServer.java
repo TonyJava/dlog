@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.impl;
+package com.czp.code.dlog.impl;
 
 import java.net.URI;
 import java.util.Properties;
@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 
-import com.czp.opensrource.dlog.api.Server;
+import com.czp.code.dlog.api.Server;
 
 /**
  * Function:分布式日志系统的AMQ实现<br>

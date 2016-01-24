@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.log.view.ws;
+package com.czp.code.dlog.view.web;
 
 import java.io.IOException;
 

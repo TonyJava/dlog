@@ -1,9 +1,9 @@
-package com.czp.opensrource.dlog.main;
+package com.czp.code.dlog.main;
 
 import java.util.Properties;
 
-import com.czp.opensrource.dlog.api.Server;
-import com.czp.opensrource.dlog.impl.AMQLogServer;
+import com.czp.code.dlog.api.Server;
+import com.czp.code.dlog.impl.AMQLogServer;
 
 /**
  * Function:启动MQ服务<br>

@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.api;
+package com.czp.code.dlog.api;
 
 import java.util.Properties;
 

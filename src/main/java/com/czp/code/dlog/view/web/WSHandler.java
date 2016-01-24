@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.log.view.ws;
+package com.czp.code.dlog.view.web;
 
 import java.io.IOException;
 
@@ -8,6 +8,8 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
+import com.czp.code.dlog.view.IMessageHandler;
+
 /**
  * Function:XXX<br>
  *
@@ -15,14 +17,10 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
  * Author :coder_czp@126.com<br>
  * Copyright (c) 2015,coder_czp@126.com All Rights Reserved.
  */
-public class WSHandler extends WebSocketServlet {
+public class WSHandler extends WebSocketServlet implements IMessageHandler {
 
 	private static final long serialVersionUID = 1L;
 	private LogSocket socket = new LogSocket();
-
-	public void send(String message) throws IOException {
-		socket.send(message);
-	}
 
 	@Override
 	public void configure(WebSocketServletFactory factory) {
@@ -36,6 +34,15 @@ public class WSHandler extends WebSocketServlet {
 				return socket;
 			}
 		});
+	}
+
+	@Override
+	public void onMessage(byte[] message) {
+		try {
+			socket.send(new String(message));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

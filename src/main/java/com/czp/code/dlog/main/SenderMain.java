@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.main;
+package com.czp.code.dlog.main;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.log.appender;
+package com.czp.code.dlog.appender;
 
 import java.util.Properties;
 
@@ -47,7 +47,7 @@ public class MQAppender extends AppenderSkeleton {
         if (topic == null)
             throw new MissingConfigException("topic must be specified by the Kafka log4j appender");
         
-        props.put("compression.type", "true");
+        props.put("compression.type", "false");
         props.put("serializer.class", serializer);
         props.put("metadata.broker.list", servers);
         producer = new Producer<String, String>(new ProducerConfig(props));
@@ -77,7 +77,7 @@ public class MQAppender extends AppenderSkeleton {
                 return;
             String data = subAppend(event);
             String key = String.valueOf(event.timeStamp);
-          //  producer.send(new KeyedMessage<String, String>(topic, key, data));
+            producer.send(new KeyedMessage<String, String>(topic, key, data));
         } catch (Throwable e) {
             LogLog.error("kafka send log message error:" + event.getMessage(), e);
         }

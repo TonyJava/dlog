@@ -1,4 +1,4 @@
-package com.czp.opensrource.dlog.main;
+package com.czp.code.dlog.main;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -11,7 +11,7 @@ import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.czp.opensrource.dlog.api.Constants;
+import com.czp.code.dlog.api.Constants;
 
 /**
  * Function:启动日志消费者<br>
