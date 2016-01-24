@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>weblog</title>
+</head>
+<body>
+	web-log
+	<hr>
+	<div id="mem"
+		style="width: 400px; height: 400px; border: red 1ps slod;">wait
+		to connect server</div>
+</body>
+<script type="text/javascript">
+	var line = 0;
+	var ws = new WebSocket("ws://" + window.location.host + "/ws");
+	ws.onopen = function() {
+		printmsg("onOpen");
+	};
+
+	ws.onmessage = function(e) {
+		printmsg(e.data);
+		ws.send(e.data);
+	};
+	ws.onclose = function() {
+		printmsg("connect closed");
+	};
+	ws.onerror = function(e) {
+		printmsg("recv error:" + e);
+	};
+
+	function printmsg(str) {
+		var msg = document.getElementById("mem");
+		if (line++ < 50)
+			msg.innerHTML += str;
+		else {
+			msg.innerHTML = str;
+			line = 0;
+		}
+	}
+</script>
+</html>
