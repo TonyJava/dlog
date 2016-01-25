@@ -4,12 +4,23 @@ import com.czp.code.dlog.view.LogViewer;
 import com.czp.code.dlog.view.WebViewer;
 
 public class App {
+    
     public static void main(String[] args) {
-        LogViewer view = new LogViewer("127.0.0.1:9092", "127.0.0.1:2181", "dlog");
-        WebViewer handler = new WebViewer(8080);
+        if (args.length < 4) {
+            System.out.println("Usage:java  -jar  mqServer zkServer topic webPort");
+            return;
+        }
+        String mqServer = args[0];
+        String zkServer = args[1];
+        String topic = args[2];
+        int webPort = Integer.valueOf(args[3]);
+        
+        LogViewer view = new LogViewer(mqServer, zkServer, topic);
+        WebViewer handler = new WebViewer(webPort);
         view.addHandler(handler);
         handler.start();
         view.start();
         view.stop();
+        
     }
 }

@@ -6,18 +6,12 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
-import com.czp.code.dlog.view.LogViewer;
-import com.czp.code.dlog.view.WebViewer;
+import com.czp.code.dlog.main.App;
 
 public class AppTest extends TestCase {
     
     public void testWebView() {
-        LogViewer view = new LogViewer("127.0.0.1:9092", "127.0.0.1:2181","dlog");
-        WebViewer handler = new WebViewer(8080);
-        view.addHandler(handler);
-        handler.start();
-        view.start();
-        view.stop();
+        App.main(new String[] {"127.0.0.1:9092", "127.0.0.1:2181", "dlog", "8080"});
     }
     
     public void testSender() {
@@ -26,7 +20,7 @@ public class AppTest extends TestCase {
         String line = null;
         while (!(line = sc.nextLine()).equals("exit")) {
             for (int i = 0; i < 100; i++) {
-                log.error(line + i);
+                log.info(line + i);
             }
         }
         sc.close();

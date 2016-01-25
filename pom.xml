@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bin.jar.main>com.czp.opensrource.dlog.main.ServerMain</bin.jar.main>
+		<bin.jar.main>com.czp.code.dlog.main.App</bin.jar.main>
 		<bin.jar.type>MQServer</bin.jar.type>
 	</properties>
 
