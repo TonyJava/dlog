@@ -8,8 +8,10 @@ import kafka.producer.ProducerConfig;
 import kafka.producer.async.MissingConfigException;
 
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
+
 /**
  * Function: 基于kafka的Appender
  * 
@@ -18,13 +20,16 @@ import org.apache.log4j.spi.LoggingEvent;
  *        usage:<br>
  *        # appender kafka <br>
  *        log4j.appender.KAFKA=com.aoliday.com.log.MQAppender <br>
- *        log4j.appender.KAFKA.servers=127.0.0.1:9092,127.0.0.1:9093 log4j.appender.KAFKA.topic=test
- *        log4j.appender.KAFKA.Threshold=INFO log4j.appender.KAFKA.layout=org.apache.log4j.PatternLayout
- *        log4j.appender.KAFKA.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L-%m%n
+ *        log4j.appender.KAFKA.servers=127.0.0.1:9092,127.0.0.1:9093<br>
+ *        log4j.appender.KAFKA.layout=org.apache.log4j.PatternLayout<br>
+ *        log4j.appender.KAFKA.topic=test log4j.appender.KAFKA.Threshold=INFO<br>
+ *        log4j.appender.KAFKA.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %t %c{1}:%L-%m%n
  */
 public class MQAppender extends AppenderSkeleton {
     
-    private String serializer = "kafka.serializer.StringEncoder";
+    private static final String pattern = "%d{yyyy-MM-dd HH:mm:ss} %-5p %t %c{1}:%L-%m%n";
+    
+    private static final String serializer = "kafka.serializer.StringEncoder";
     
     private Producer<String, String> producer;
     
@@ -52,11 +57,10 @@ public class MQAppender extends AppenderSkeleton {
         props.put("metadata.broker.list", servers);
         producer = new Producer<String, String>(new ProducerConfig(props));
         
+        if (layout == null)
+            layout = new PatternLayout(pattern);
+        
         LogLog.debug(String.format("Kafka producer connected to %s topic:%s", servers, topic));
-    }
-    
-    public String subAppend(LoggingEvent event) {
-        return ((this.layout == null) ? event.getRenderedMessage() : this.layout.format(event));
     }
     
     public void close() {
@@ -75,7 +79,7 @@ public class MQAppender extends AppenderSkeleton {
         try {
             if (event.getLoggerName().startsWith("kafka"))
                 return;
-            String data = subAppend(event);
+            String data = layout.format(event);
             String key = String.valueOf(event.timeStamp);
             producer.send(new KeyedMessage<String, String>(topic, key, data));
         } catch (Throwable e) {

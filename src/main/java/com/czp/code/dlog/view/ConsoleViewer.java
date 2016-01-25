@@ -7,12 +7,7 @@ package com.czp.code.dlog.view;
  * @date: 2016年1月23日
  * 
  */
-public class ConsoleViewer extends LogViewer implements IMessageHandler {
-
-	public ConsoleViewer(String servers, String zkServes) {
-		super(servers, zkServes);
-		setHandler(this);
-	}
+public class ConsoleViewer  implements IMessageHandler {
 
 	@Override
 	public void onMessage(byte[] message) {

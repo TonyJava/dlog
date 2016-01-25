@@ -1,32 +1,43 @@
 <html>
 <head>
 <title>weblog</title>
+<style type="text/css">
+textarea {
+	height: 800px;
+	width: 800px;
+	color: white;
+	background: black;
+}
+
+#statusDiv {
+	border: solid 1px blue;
+	font-size: 25px;
+}
+</style>
 </head>
 <body>
-	web-log[status:
-	<span id="status">wait connect server</span>]
-	<hr>
-	<textarea id="mem" rows="38" cols="150"
-		style="background: black; color: white" readonly="readonly"></textarea>
+	<div id="statusDiv">
+		web-log[status:<span id="status">wait connect server</span>]
+	</div>
+	<textarea id="mem" readonly="readonly"></textarea>
 </body>
 <script type="text/javascript">
 	var ws = new WebSocket("ws://" + window.location.host + "/ws");
-	var st = document.getElementById("status");
 	var msg = document.getElementById("mem");
+	var st = document.getElementById("status");
 	var line = 0;
 
 	ws.onopen = function() {
 		st.innerText = "connected to service";
 	};
-
 	ws.onmessage = function(e) {
 		printmsg(e.data);
 	};
 	ws.onclose = function() {
-		printmsg("connect closed");
+		st.innerText = "connect closed";
 	};
 	ws.onerror = function(e) {
-		printmsg("recv error:" + e);
+		st.innerText = "recv error:" + e;
 	};
 
 	function printmsg(str) {
