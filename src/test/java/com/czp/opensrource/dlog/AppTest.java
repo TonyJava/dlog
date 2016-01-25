@@ -19,7 +19,7 @@ public class AppTest extends TestCase {
         Scanner sc = new Scanner(System.in);
         String line = null;
         while (!(line = sc.nextLine()).equals("exit")) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100000; i++) {
                 log.info(line + i);
             }
         }
