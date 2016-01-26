@@ -27,12 +27,12 @@ public class LogViewer {
     public LogViewer(String servers, String zkServes, String topic) {
         this.topic = topic;
         Properties props = new Properties();
-        props.put("group.id", "loggroup");
         props.put("zookeeper.connect", zkServes);
         props.put("metadata.broker.list", servers);
         props.put("auto.offset.reset", "smallest");
         props.put("auto.commit.interval.ms", "1000");
         props.put("zookeeper.connectiontimeout.ms", "3000");
+        props.put("group.id", "loggroup"+System.nanoTime());
         props.put("serializer.class", "kafka.serializer.StringEncoder");
         consumer = Consumer.createJavaConsumerConnector(new ConsumerConfig(props));
         

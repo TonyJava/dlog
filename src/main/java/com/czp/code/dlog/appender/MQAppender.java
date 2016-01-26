@@ -27,18 +27,22 @@ import org.apache.log4j.spi.LoggingEvent;
  */
 public class MQAppender extends AppenderSkeleton {
     
-    private static final String pattern = "%d{yyyy-MM-dd HH:mm:ss} %-5p %t %c{1}:%L-%m%n";
+    private static final String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%t] [%c{1}:%L] [%m]%n";
     
     private static final String serializer = "kafka.serializer.StringEncoder";
     
+    private static final String topicPre = "log_";
+    
     private Producer<String, String> producer;
     
+    /** 所有的topic加前缀 :log_ ,便于后续订阅时过滤 */
+    private String project;
+    
+    /** kafka服务列表 */
     private String servers;
     
-    private String topic;
-    
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setProject(String project) {
+        this.project = topicPre + project;
     }
     
     public void setServers(String servers) {
@@ -49,18 +53,20 @@ public class MQAppender extends AppenderSkeleton {
         Properties props = new Properties();
         if (servers == null)
             throw new MissingConfigException("servers must be specified by the Kafka log4j appender");
-        if (topic == null)
-            throw new MissingConfigException("topic must be specified by the Kafka log4j appender");
+        if (project == null)
+            throw new MissingConfigException("project must be specified by the Kafka log4j appender");
         
-        props.put("compression.type", "false");
+        props.put("compression.type", "true");
         props.put("serializer.class", serializer);
+        props.put("reconnect.interval", "10000");
         props.put("metadata.broker.list", servers);
+        props.put("reconnect.time.interval.ms", "10000");
         producer = new Producer<String, String>(new ProducerConfig(props));
         
         if (layout == null)
             layout = new PatternLayout(pattern);
         
-        LogLog.debug(String.format("Kafka producer connected to %s topic:%s", servers, topic));
+        LogLog.debug(String.format("Kafka producer connected to %s topic:%s", servers, project));
     }
     
     public void close() {
@@ -77,13 +83,13 @@ public class MQAppender extends AppenderSkeleton {
     @Override
     protected void append(LoggingEvent event) {
         try {
-            if (event.getLoggerName().startsWith("kafka"))
+            if (event.getLoggerName().startsWith("kafka."))
                 return;
             String data = layout.format(event);
             String key = String.valueOf(event.timeStamp);
-            producer.send(new KeyedMessage<String, String>(topic, key, data));
+            producer.send(new KeyedMessage<String, String>(project, key, data));
         } catch (Throwable e) {
-            LogLog.error("kafka send log message error:" + event.getMessage(), e);
+            LogLog.error("kafka send log  error:" + event.getMessage(), e);
         }
     }
 }
