@@ -27,7 +27,7 @@ import org.apache.log4j.spi.LoggingEvent;
  */
 public class MQAppender extends AppenderSkeleton {
     
-    private static final String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%t] [%c{1}:%L] [%m]%n";
+    private static final String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%t] [%c{1}.%M:%L] [%m]%n";
     
     private static final String serializer = "kafka.serializer.StringEncoder";
     
