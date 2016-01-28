@@ -1,5 +1,8 @@
 package com.czp.code.dlog.view;
 
+import com.czp.code.dlog.IMessageHandler;
+
+
 /**
  * Function: 控制台消费者
  * 
@@ -10,8 +13,8 @@ package com.czp.code.dlog.view;
 public class ConsoleViewer  implements IMessageHandler {
 
 	@Override
-	public void onMessage(byte[] message) {
-		System.out.println(new String(message));
+	public void onMessage(String message) {
+		System.out.println(message);
 	}
 
 }

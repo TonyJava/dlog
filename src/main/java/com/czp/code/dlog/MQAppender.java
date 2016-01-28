@@ -1,4 +1,4 @@
-package com.czp.code.dlog.appender;
+package com.czp.code.dlog;
 
 import java.util.Properties;
 

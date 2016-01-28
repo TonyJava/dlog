@@ -12,3 +12,7 @@
 hs_err_pid*
 /target/
 /activemq-data/
+/.settings/
+/.classpath
+/.project
+/.gitignore

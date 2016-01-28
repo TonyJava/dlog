@@ -17,6 +17,9 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
+import com.czp.code.dlog.IMessageHandler;
+
+
 /**
  * Function: WebsocketLog
  * 
@@ -61,13 +64,12 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 	}
 
 	@Override
-	public void onMessage(byte[] message) {
+	public void onMessage(String message) {
 		try {
-			String strMsg = new String(message);
 			if (remote == null) {
-				buffer.add(strMsg);
+				buffer.add(message);
 			} else {
-				remote.sendString(strMsg);
+				remote.sendString(message);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

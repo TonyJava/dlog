@@ -1,4 +1,4 @@
-package com.czp.code.dlog.view;
+package com.czp.code.dlog;
 
 /**
  * Function:XXX<br>
@@ -8,7 +8,11 @@ package com.czp.code.dlog.view;
  * Copyright (c) 2015,coder_czp@126.com All Rights Reserved.
  */
 public interface IMessageHandler {
-
-	void onMessage(byte[] message);
+    
+    /**
+     * 处理日志信息
+     * 
+     * @param message
+     */
+    void onMessage(String message);
 }
-
