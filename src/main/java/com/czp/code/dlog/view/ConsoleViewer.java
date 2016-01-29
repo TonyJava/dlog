@@ -13,7 +13,7 @@ import com.czp.code.dlog.IMessageHandler;
 public class ConsoleViewer  implements IMessageHandler {
 
 	@Override
-	public void onMessage(String message) {
+	public void onMessage(String topic, String message) {
 		System.out.println(message);
 	}
 

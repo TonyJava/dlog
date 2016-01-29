@@ -64,7 +64,7 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 	}
 
 	@Override
-	public void onMessage(String message) {
+	public void onMessage(String topic, String message) {
 		try {
 			if (remote == null) {
 				buffer.add(message);

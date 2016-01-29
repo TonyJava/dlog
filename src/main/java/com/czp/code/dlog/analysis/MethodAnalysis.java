@@ -21,13 +21,13 @@ public class MethodAnalysis implements IMessageHandler {
     protected Pattern pattern = Pattern.compile("\\[([^\\]]*)\\]");
     
     @Override
-    public void onMessage(String message) {
+    public void onMessage(String topic, String message) {
         Matcher matcher = pattern.matcher(message);
         System.out.println(matcher.matches());
     }
     
     public static void main(String[] args) {
         MethodAnalysis a = new MethodAnalysis();
-        a.onMessage("[2016-01-28 19:33:23] [INFO ] [main] [AppTest.xtestSender:46] [ddddddddddddd9980]");
+        a.onMessage(null, "[2016-01-28 19:33:23] [INFO ] [main] [AppTest.xtestSender:46] [ddddddddddddd9980]");
     }
 }

@@ -11,8 +11,8 @@ public interface IMessageHandler {
     
     /**
      * 处理日志信息
-     * 
+     * @param topic 
      * @param message
      */
-    void onMessage(String message);
+    void onMessage(String topic, String message);
 }

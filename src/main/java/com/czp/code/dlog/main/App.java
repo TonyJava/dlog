@@ -1,7 +1,5 @@
 package com.czp.code.dlog.main;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.czp.code.dlog.LogConsumer;
 import com.czp.code.dlog.view.WebViewer;
@@ -17,9 +15,7 @@ public class App {
         String topic = args[1];
         int webPort = Integer.valueOf(args[2]);
         
-        List<String> topics = new ArrayList<String>();
-        topics.add(topic);
-        LogConsumer view = new LogConsumer(mqServer, topics, "webclient");
+        LogConsumer view = new LogConsumer(mqServer, new String[]{topic}, "webclient");
         WebViewer handler = new WebViewer(webPort);
         view.addHandler(handler);
         handler.start();
