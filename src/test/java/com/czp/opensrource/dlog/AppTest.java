@@ -10,6 +10,7 @@ import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
 
 import com.czp.code.dlog.LogConsumer;
+import com.czp.code.dlog.LogProducer;
 import com.czp.code.dlog.monitor.FileMonitor;
 import com.czp.code.dlog.monitor.IFileListener;
 import com.czp.code.dlog.monitor.SimpleFileListener;
@@ -30,7 +31,7 @@ public class AppTest extends TestCase {
 
 	public void testWebView() {
 		LogConsumer view = new LogConsumer("127.0.0.1:9092",
-				new String[] { "log_main_INFO" }, "web");
+				new String[] { "log_main_INFO" }, "webp");
 		WebViewer handler = new WebViewer(8080);
 		view.addHandler(handler);
 		handler.start();
@@ -51,11 +52,13 @@ public class AppTest extends TestCase {
 	}
 
 	public static void main(String[] args) throws Exception {
+		final LogProducer producer = new LogProducer("127.0.0.1:9092");
 		IFileListener l = new SimpleFileListener(){
 
 			@Override
 			public void onChange(File file, String line) {
-				System.out.println(String.format("%s %s", file,line));
+				producer.send("log_main_INFO", line+"\n");
+				System.out.println(line);
 			}
 			
 			
@@ -64,5 +67,6 @@ public class AppTest extends TestCase {
 		fm.start();
 		System.in.read();
 		fm.stop();
+		producer.close();
 	}
 }
