@@ -1,5 +1,6 @@
 package com.czp.opensrource.dlog;
 
+import java.io.File;
 import java.util.Scanner;
 
 import junit.framework.Test;
@@ -9,6 +10,9 @@ import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
 
 import com.czp.code.dlog.LogConsumer;
+import com.czp.code.dlog.monitor.FileMonitor;
+import com.czp.code.dlog.monitor.IFileListener;
+import com.czp.code.dlog.monitor.SimpleFileListener;
 import com.czp.code.dlog.view.WebViewer;
 
 /**
@@ -46,4 +50,19 @@ public class AppTest extends TestCase {
 		sc.close();
 	}
 
+	public static void main(String[] args) throws Exception {
+		IFileListener l = new SimpleFileListener(){
+
+			@Override
+			public void onChange(File file, String line) {
+				System.out.println(String.format("%s %s", file,line));
+			}
+			
+			
+		};
+		FileMonitor fm = new FileMonitor("G:\\tomcat\\logs","gbk",l, 100);
+		fm.start();
+		System.in.read();
+		fm.stop();
+	}
 }
