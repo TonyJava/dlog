@@ -9,7 +9,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 
@@ -21,13 +20,13 @@ import org.apache.kafka.common.serialization.StringDeserializer;
  *        https://gist.github.com/rmoff/c18fd2b4a734576d7289<br>
  *        http://kafka.apache.org/documentation.html#producerapi
  */
-public class LogConsumer {
+public class LogDispatch {
 
 	protected CopyOnWriteArraySet<IMessageHandler> handlers = new CopyOnWriteArraySet<IMessageHandler>();
 
 	protected KafkaConsumer<String, String> consumer;
 
-	public LogConsumer(String servers, String[] topic, String group) {
+	public LogDispatch(String servers, String[] topic, String group) {
 		String clsName = StringDeserializer.class.getCanonicalName();
 		Properties props = new Properties();
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, group);

@@ -1,14 +1,11 @@
 package com.czp.code.dlog.view;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
@@ -16,9 +13,6 @@ import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
 import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
-
-import com.czp.code.dlog.IMessageHandler;
-
 
 /**
  * Function: WebsocketLog
@@ -28,18 +22,18 @@ import com.czp.code.dlog.IMessageHandler;
  *        http://www.eclipse.org/jetty/documentation/current/jetty-websocket
  *        -server-api.html
  */
-public class WebViewer extends WebSocketServlet implements IMessageHandler,
-		WebSocketListener, Runnable {
+public class WebViewer extends WebSocketServlet implements WebSocketListener,
+		Runnable {
 
 	private String useMap = "org.eclipse.jetty.servlet.Default.useFileMappedBuffer";
+
+	private CopyOnWriteArrayList<Session> clients = new CopyOnWriteArrayList<Session>();
 
 	private static final ByteBuffer PING = ByteBuffer.allocate(1);
 
 	private static final long serialVersionUID = 1L;
 
-	private LinkedList<String> buffer = new LinkedList<String>();
-
-	private RemoteEndpoint remote;
+	private DaemonTimer timer;
 
 	private Server server;
 
@@ -47,11 +41,11 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 
 	public WebViewer(int port) {
 		this.port = port;
+		this.timer = DaemonTimer.getInstance();
 	}
 
 	@Override
 	public void configure(WebSocketServletFactory factory) {
-		factory.getPolicy().setIdleTimeout(100000);
 		factory.setCreator(new WebSocketCreator() {
 
 			@Override
@@ -61,19 +55,6 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 				return WebViewer.this;
 			}
 		});
-	}
-
-	@Override
-	public void onMessage(String topic, String message) {
-		try {
-			if (remote == null) {
-				buffer.add(message);
-			} else {
-				remote.sendString(message);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void start() {
@@ -89,16 +70,19 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 			server.start();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
 	public void stop() {
 		try {
 			server.stop();
-			DaemonTimer.getInstance().removeTask(this);
+			for (Session s : clients) {
+				s.close();
+			}
+			timer.removeTask(this);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -109,22 +93,13 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 
 	@Override
 	public void onWebSocketClose(int paramInt, String reason) {
-		DaemonTimer.getInstance().removeTask(this);
+		System.out.println(reason);
 	}
 
 	@Override
 	public void onWebSocketConnect(Session session) {
-		this.remote = session.getRemote();
-		Iterator<String> iterator = buffer.iterator();
-		while (iterator.hasNext()) {
-			try {
-				remote.sendString(iterator.next());
-				iterator.remove();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		DaemonTimer.getInstance().addTask(this, 1000);
+		clients.add(session);
+		timer.addTask(this, 1000);
 	}
 
 	@Override
@@ -140,9 +115,14 @@ public class WebViewer extends WebSocketServlet implements IMessageHandler,
 	@Override
 	public void run() {
 		try {
-			remote.sendPing(PING);
+			for (Session s : clients) {
+				if (s.isOpen())
+					s.getRemote().sendPing(PING);
+				else
+					clients.remove(s);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 }

@@ -11,16 +11,13 @@ import junit.framework.TestSuite;
 
 import org.apache.log4j.Logger;
 
-import com.czp.code.dlog.LogConsumer;
+import com.czp.code.dlog.LogDispatch;
 import com.czp.code.dlog.LogProducer;
 import com.czp.code.dlog.monitor.FileMonitor;
 import com.czp.code.dlog.monitor.IFileListener;
 import com.czp.code.dlog.monitor.SimpleFileListener;
 import com.czp.code.dlog.view.WebViewer;
 
-/**
- * Unit test for simple App.
- */
 public class AppTest extends TestCase {
     
     public AppTest(String testName) {
@@ -32,9 +29,8 @@ public class AppTest extends TestCase {
     }
     
     public void testWebView() {
-        LogConsumer view = new LogConsumer("127.0.0.1:9092", new String[] {"log_main_INFO"}, "webp");
+        LogDispatch view = new LogDispatch("127.0.0.1:9092", new String[] {"log_main_INFO"}, "webp");
         WebViewer handler = new WebViewer(8080);
-        view.addHandler(handler);
         handler.start();
         view.start();
         view.stop();

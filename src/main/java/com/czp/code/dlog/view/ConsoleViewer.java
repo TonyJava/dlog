@@ -17,4 +17,9 @@ public class ConsoleViewer  implements IMessageHandler {
 		System.out.println(message);
 	}
 
+	@Override
+	public String getTopic() {
+		return null;
+	}
+
 }

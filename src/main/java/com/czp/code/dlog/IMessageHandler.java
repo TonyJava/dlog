@@ -15,4 +15,6 @@ public interface IMessageHandler {
      * @param message
      */
     void onMessage(String topic, String message);
+    
+    String getTopic();
 }

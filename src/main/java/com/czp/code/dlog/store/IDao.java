@@ -1,6 +1,7 @@
 package com.czp.code.dlog.store;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Function: 分析结果存储
@@ -10,11 +11,19 @@ import java.util.List;
  * 
  */
 public interface IDao {
-    
-    boolean add(String sql);
-    
-    boolean del(String sql);
-    
-    List<String> query(String sql);
-    
+
+	void init();
+
+	void shutdown();
+
+	boolean add(String sql);
+
+	void batchAdd(String sql);
+
+	void flush();
+
+	boolean del(String sql);
+
+	List<Map<String,Object>> query(String sql);
+
 }
