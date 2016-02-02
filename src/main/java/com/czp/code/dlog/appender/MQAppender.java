@@ -76,7 +76,7 @@ public class MQAppender extends AppenderSkeleton {
 			Level level = event.getLevel();
 			String data = layout.format(event);
 			String topic = String.format("%s_%s_%s", topicPre, project, level);
-			producer.send(topic, data);
+			producer.asynSend(topic,"", data);
 		} catch (Throwable e) {
 			LogLog.error("kafka send log  error:" + event.getMessage(), e);
 		}
