@@ -22,4 +22,10 @@ public class ConsoleViewer  implements IMessageHandler {
 		return null;
 	}
 
+    @Override
+    public void shutDown() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

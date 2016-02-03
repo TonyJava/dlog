@@ -17,4 +17,6 @@ public interface IMessageHandler {
     void onMessage(String topic, String message);
     
     String getTopic();
+    
+    void shutDown();
 }
